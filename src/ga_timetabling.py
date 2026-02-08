@@ -164,9 +164,15 @@ def run_ga(
     tourn_k: int = 3,
     alpha: int = 10_000,
     seed: int = 42,
-    use_repair: bool = True
+    use_repair: bool = True,
+    n_elite: int = 1,
 ) -> Tuple[np.ndarray, int, int, int, List[int]]:
+    """
+    Run genetic algorithm with optional elitism.
+    n_elite: number of best individuals copied unchanged to the next generation (default 1).
+    """
     rng = np.random.default_rng(seed)
+    n_elite = min(max(0, n_elite), pop_size)
 
     pop = init_population(inst, pop_size, rng)
     if use_repair:
@@ -181,7 +187,9 @@ def run_ga(
     best_F, best_H, best_S = evaluate(inst, best_sol, alpha=alpha)
 
     for g in range(generations):
-        new_pop = []
+        # Elitism: copy best n_elite individuals to next generation (lower fitness = better)
+        elite_indices = np.argsort(fit)[:n_elite]
+        new_pop = [pop[i].copy() for i in elite_indices]
 
         while len(new_pop) < pop_size:
             p1 = tournament_select(pop, fit, rng, k=tourn_k)
@@ -230,6 +238,7 @@ def run_multiple(
     tourn_k: int = 3,
     alpha: int = 10_000,
     use_repair: bool = True,
+    n_elite: int = 1,
     plot_best_run: bool = False,
 ) -> Dict[str, object]:
     results = []  # list of dicts
@@ -246,7 +255,8 @@ def run_multiple(
             tourn_k=tourn_k,
             alpha=alpha,
             seed=seed,
-            use_repair=use_repair
+            use_repair=use_repair,
+            n_elite=n_elite,
         )
 
         if best_H != 0:
