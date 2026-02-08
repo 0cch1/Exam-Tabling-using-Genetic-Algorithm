@@ -165,11 +165,11 @@ def run_ga(
     alpha: int = 10_000,
     seed: int = 42,
     use_repair: bool = True,
-    n_elite: int = 1,
+    n_elite: int = 2,
 ) -> Tuple[np.ndarray, int, int, int, List[int]]:
     """
     Run genetic algorithm with optional elitism.
-    n_elite: number of best individuals copied unchanged to the next generation (default 1).
+    n_elite: number of best individuals copied unchanged to the next generation (default 2).
     """
     rng = np.random.default_rng(seed)
     n_elite = min(max(0, n_elite), pop_size)
@@ -238,7 +238,7 @@ def run_multiple(
     tourn_k: int = 3,
     alpha: int = 10_000,
     use_repair: bool = True,
-    n_elite: int = 1,
+    n_elite: int = 2,
     plot_best_run: bool = False,
 ) -> Dict[str, object]:
     results = []  # list of dicts
