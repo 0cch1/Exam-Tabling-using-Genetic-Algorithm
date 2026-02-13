@@ -1,6 +1,6 @@
 # Exam Timetabling using Genetic Algorithms
 
-CT421 Assignment 1 — Genetic Algorithm for exam timetabling. Assigns exams to timeslots so that no student has two exams in the same slot (hard constraint) and the number of consecutive exams per student is minimised (soft constraint).
+Genetic Algorithm for exam timetabling. Assigns exams to timeslots so that no student has two exams in the same slot (hard constraint) and the number of consecutive exams per student is minimised (soft constraint).
 
 ---
 
